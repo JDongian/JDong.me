@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Korean Vocab test 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time to review vocab">
+    <meta name="author" content="Joshua Dong">
+
+    <!--
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    -->
+    <style type="text/css">
+    body {
+        color: black;
+        font-family: Verdana, Arial, Helvetica, sans-serif; 
+        font-size: 22px;
+    }
+    .meaning {
+        font-size: 16px;
+    }
+    .definition {
+        font-size: 16px;
+    }
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/ktest-icon-144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/ktest-icon-114.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/ktest-icon-72.png">
+                    <link rel="apple-touch-icon-precomposed" href="/assets/ico/ktest-icon-57.png">
+                                   <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+  </head>
+  <body>
+      <div id="vocab"
+        style="margin:12px;float:left;height:5em;width:5em;border:1px solid #ccc;font:16px/26px Verdana, Arial, Helvetica, sans-serif;overflow:auto;">
+      </div>
+      <div id="quiz"
+           style="margin:12px;padding:8px;float:left;height:5em;width:5em;border:1px solid #ccc;overflow:auto;">
+        <div class="test" style="text-align:center;vertical-align:middle;">
+            <div class="term">
+              Word
+            </div>
+            <div class="meaning">
+              Meaning
+            </div>
+             </br>
+            <div style="text-align:center;padding-top:1%;">
+              <input type="button" value="Quiz Me!" style="margin:auto;" onClick="Javascript:setQuiz();">
+              <input type="button" value="Reveal" style="margin:auto;" onClick="Javascript:revealQuiz();">
+              <input type="button" value="Reset" style="margin:auto;" onClick="Javascript:resetQuiz();">
+            </div>
+        </div>
+      </div>
+      <div id="info"
+           style="margin:12px;padding:8px;float:left;height:5em;width:5em;border:1px solid #ccc;overflow:auto;">
+           <div class="title" style="">Word</div>
+           <div class="definition" style="">Definition</div>
+           </br>
+           <div style="text-align:center;padding-top:1%;">
+             <input type="button" value="Reset" style="margin:auto;" onClick="Javascript:resetInfo();">
+           </div>
+      </div>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <script>
+        var words = ["것",
+                     "하다",
+                     "있다",
+                     "수",
+                     "하다",
+                     "나",
+                     "없다",
+                     "않다",
+                     "사람",
+                     "우리",
+                     "그",
+                     "아니다",
+                     "보다",
+                     "거",
+                     "보다",
+                     "같다",
+                     "주다",
+                     "대하다",
+                     "가다",
+                     "년",
+                     "한",
+                     "말",
+                     "일",
+                     "이",
+                     "말하다",
+                     "위하다",
+                     "그러나",
+                     "오다",
+                     "알다",
+                     "씨",
+                     "그렇다",
+                     "크다",
+                     "일",
+                     "사회",
+                     "많다",
+                     "안",
+                     "좋다",
+                     "더",
+                     "받다",
+                     "그것",
+                     "집",
+                     "나오다",
+                     "그리고",
+                     "문제",
+                     "그런",
+                     "살다",
+                     "저",
+                     "못하다",
+                     "생각하다",
+                     "모르다",
+                     "속",
+                     "만들다",
+                     "데",
+                     "앞",
+                     "경우 ",
+                     "중",
+                     "어떤",
+                     "잘",
+                     "그녀",
+                     "먹다",
+                     "자신",
+                     "문화",
+                     "원",
+                     "생각",
+                     "어떻다",
+                     "명",
+                     "통하다",
+                     "그러다",
+                     "그러다",
+                     "소리",
+                     "다시",
+                     "다른",
+                     "이런",
+                     "여자",
+                     "개",
+                     "정도",
+                     "다",
+                     "좀",
+                     "싶다",
+                     "보이다",
+                     "가지다",
+                     "함께",
+                     "아이",
+                     "지나다",
+                     "많이",
+                     "시간",
+                     "너",
+                     "인간",
+                     "사실",
+                     "나다",
+                     "이렇다",
+                     "어머니",
+                     "눈",
+                     "뭐",
+                     "점",
+                     "의하다",
+                     "시대",
+                     "다음",
+                     "이러하다",
+                     "누구"];
+        var definitions = ["A thing or an object",
+                           "To do",
+                           "To be",
+                           "way, method, Number",
+                           "To do",
+                           "I",
+                           "Do not exist, absent",
+                           "To not do",
+                           "Person",
+                           "we, our",
+                           "He, That",
+                           "To not be",
+                           "To try",
+                           "Thing",
+                           "To see",
+                           "To be similar",
+                           "To give, to do for a person",
+                           "Face, confront",
+                           "To go",
+                           "Year",
+                           "One, a single",
+                           "words,speaking",
+                           "Work",
+                           "A person, a man/woman",
+                           "Speak",
+                           "To do for the sake of",
+                           "However or  but still",
+                           "To come",
+                           "To know",
+                           "~ Mr.",
+                           "That is right or  yes.",
+                           "To be big, large",
+                           "One day",
+                           "culture,society",
+                           "many, much",
+                           "~ not ~ + VERB",
+                           "To be good",
+                           "More",
+                           "Receive",
+                           "That thing",
+                           "House",
+                           "Come out",
+                           "And or  and then",
+                           "question,problem",
+                           "Such a",
+                           "To live",
+                           "That",
+                           "Be impossible",
+                           "To think",
+                           "To not know",
+                           "The inside",
+                           "To make",
+                           "Place, point, instance",
+                           "In front of, before",
+                           "A case or  an instance",
+                           "The center, the middle",
+                           "What kind of, what sort of",
+                           "Well",
+                           "She",
+                           "Eat, chow down on",
+                           "one's own self, one's own body",
+                           "culture",
+                           "A unit of south korean  money, KRW",
+                           "Thought",
+                           "how/what.. do you think of",
+                           "Person counter",
+                           "Run, lead; flow; go through",
+                           "and so, and then, well",
+                           "and so, and then, well",
+                           "A sound,noise",
+                           "Again",
+                           "Different",
+                           "Such, like this",
+                           "woman,female",
+                           "Unit or  piece",
+                           "grade,degree",
+                           "All, everything",
+                           "A little",
+                           "want,hope",
+                           "see,catch sight of",
+                           "To have or  take or  hold",
+                           "Together, with",
+                           "Child",
+                           "pass,elapse,go on",
+                           "A lot",
+                           "Time",
+                           "You",
+                           "A person, a human being",
+                           "The truth, a fact",
+                           "To be born",
+                           "Like this",
+                           "Mom",
+                           "Eyes",
+                           "Huh? (2) something",
+                           "Store",
+                           "To be due to, owing to",
+                           "An age,period",
+                           "Next",
+                           "Be this way, be like follow",
+                           "Who"];
+      var checkedTerms = []
+
+      for (var i = 0; i < words.length; i++) {
+          $('#vocab').append('<input type="checkbox" name='+i+' value="'+words[i]+'"><div class="hangul" style="float:left;">('+(i+1)+')'+words[i]+'</div></br>');
+      }
+
+      currentTerm = -1;
+      function resetQuiz() {
+          currentTerm = -1;
+          $('#quiz .test .term').html(' ');
+          $('#quiz .test .meaning').html(' ');
+      }
+      function setQuiz() {
+          if (checkedTerms.length == 0) {
+              $('#quiz .test .term').html('You must select words to be quizzed on.');
+              $('#quiz .test .meaning').html(' ');
+          } else {
+              currentTerm = checkedTerms[Math.floor(Math.random()*checkedTerms.length)];
+              $('#quiz .test .term').html(words[currentTerm]);
+              $('#quiz .test .meaning').html(' ');
+          }
+      }
+      function revealQuiz() {
+          if (currentTerm != -1) {
+              $('#quiz .test .meaning').html(definitions[currentTerm]);
+              currentTerm = -1;
+          }
+      }
+
+      function resetInfo() {
+          $('#info .title').html(' ');
+          $('#info .definition').html(' ');
+      }
+      function fillInfo(index) {
+          $("#info .title").html(words[index]);
+          $("#info .definition").html(definitions[index]);
+      }
+
+      $(".hangul").hover(
+          function() {
+              fillInfo($(this).prev().attr("name"));
+          }
+      );
+
+      $('#vocab :checkbox').click(function() {
+          var $this = $(this);
+          if ($this.is(':checked')) {
+              checkedTerms.push($this.attr("name"));
+          } else {
+              checkedTerms = jQuery.grep(checkedTerms, function(value) {
+                  return value != $this.attr("name");
+              });
+          }
+      });
+
+      //Fluid layout
+      function flow() {
+          $("#vocab").css("height", $(window).height()-52)
+          $("#vocab").css("width", $(window).width()/2-50)
+          $("#quiz").css("height", $(window).height()/2-40-16)
+          $("#quiz").css("width", $(window).width()/2-18-16)
+          $("#info").css("height", $(window).height()/2-40-16)
+          $("#info").css("width", $(window).width()/2-18-16)
+      }
+      flow();
+      $(window).resize(flow);
+     </script>
+  </body>
+</html>
+
+

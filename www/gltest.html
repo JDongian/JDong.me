@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,10 +10,13 @@
     <title>GL test</title>
     <link href="/assets/css/normalize.css" rel="stylesheet">
     <link href="/assets/css/gl.css" rel="stylesheet">
-    <script src="/assets/js/jquery-2.1.0.min.js"></script>
-    <script src="/assets/js/sylvester.js" type="text/javascript"></script>
-    <script src="/assets/js/glUtils.js" type="text/javascript"></script>
-    <script src="/assets/js/gltest.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/assets/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/assets/js/sylvester.js"></script>
+    <script type="text/javascript" src="/assets/js/glUtils.js"></script>
+    <script type="text/javascript" src="/assets/js/gltest.js"></script>
+    <script type="text/javascript" src="/assets/js/gorbatchev/scripts/shCore.js" type="text/javascript"></script>
+    <script  type="text/javascript" src="/assets/js/gorbatchev/scripts/shBrushJScript.js" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="/assets/js/gorbatchev/styles/shCoreDefault.css"/>
     <!-- Frag shader program -->
     <script id="shader-fs" type="x-shader/x-fragment">
         varying lowp vec4 vColor;
@@ -35,7 +38,7 @@
     </script>
 
   </head>
-  <body onload="start($(window).width()-40, $(window).height()-100)">
+  <body onload="start($(window).width()-40, $(window).height()-100);">
     <br>
     <div>
       <div id="testcanvas" style="text-align:center;">
@@ -54,7 +57,23 @@
         </div>
       </div>
     </div>
+    <hr>
+    <div id="vocab"
+        style="margin:12px;float:left;height:20em;width:70%;border:1px solid #ccc;font:16px/26px Verdana, Arial, Helvetica, sans-serif;">
+      <pre class="brush: js;">
+function webgl() {
+    return "wow";
+}
+      </pre>
+    </div>
+    <div id="info"
+         style="margin:12px;padding:8px;float:left;height:20em;width:20%;border:1px solid #ccc;overflow:auto;">
+         <div style="text-align:center;padding-top:1%;">
+           <input type="button" value="Reset" style="margin:auto;">
+         </div>
+    </div>
     <script type="text/javascript">
+        SyntaxHighlighter.all();
         $("#paramWidth, #paramHeight").keypress(function(e) {
             if(e.which == 13) $("#changeDim").click();
         });
