@@ -1,0 +1,24 @@
+body {
+    background-image: url("/assets/img/geometry.png");
+    background-repeat: repeat;
+    font-family: Verdana,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 12px;
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 0.6em;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius:0px;
+    border-color: rgb(140,140,140);
+    color: rgb(0,0,0);
+    font-size: 14px;
+} .btn:hover {
+    color: rgb(255,255,255);
+    background: rgb(140,140,140);
+} .btn:active {
+    color: rgb(200,200,200);
+    background: rgb(100,100,100);
+}

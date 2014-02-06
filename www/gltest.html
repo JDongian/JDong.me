@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+    <title>GL test</title>
+    <link href="/assets/css/normalize.css" rel="stylesheet">
+    <link href="/assets/css/gl.css" rel="stylesheet">
+    <script src="/assets/js/jquery-2.1.0.min.js"></script>
+    <script src="/assets/js/sylvester.js" type="text/javascript"></script>
+    <script src="/assets/js/glUtils.js" type="text/javascript"></script>
+    <script src="/assets/js/gltest.js" type="text/javascript"></script>
+    <!-- Frag shader program -->
+    <script id="shader-fs" type="x-shader/x-fragment">
+        varying lowp vec4 vColor;
+        void main(void) {
+            gl_FragColor = vColor;
+        }
+    </script>
+    <!-- Vertex shader program -->
+    <script id="shader-vs" type="x-shader/x-vertex">
+        attribute vec3 aVertexPosition;
+        attribute vec4 aVertexColor;
+        uniform mat4 uMVMatrix;
+        uniform mat4 uPMatrix;
+        varying lowp vec4 vColor;
+        void main(void) {
+            gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+            vColor = aVertexColor;
+        }
+    </script>
+
+  </head>
+  <body onload="start($(window).width()-40, $(window).height()-100)">
+    <br>
+    <div>
+      <div id="testcanvas" style="text-align:center;">
+      </div>
+      <div style="text-align:center;padding-top:1em;">
+        <div style="display:inline;margin:0 auto;">
+            <label for="height">Height:</label>
+            <input id="paramHeight" type="number" name="height" value="480" size="4">
+        </div>
+        <div style="display:inline;margin:0 auto;">
+          <label for="width">Width:</label>
+          <input id="paramWidth" type="number" name="width" value="640" size="4">
+        </div>
+        <div>
+          <a id="changeDim" class="btn">Change Dimensions</a>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        $("#paramWidth, #paramHeight").keypress(function(e) {
+            if(e.which == 13) $("#changeDim").click();
+        });
+        $("#changeDim").click(function() {
+            start($("#paramWidth").val(), $("#paramHeight").val());
+        });
+    </script>
+  </body>
+</html>
