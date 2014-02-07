@@ -1,9 +1,9 @@
 body {
-    background-image: url("/assets/img/geometry.png");
+    background-image: url("/assets/img/geometry-dark.png");
     background-repeat: repeat;
     font-family: Verdana,Liberation Sans,DejaVu Sans,sans-serif;
     font-size: 12px;
-    color: rgb(0,0,0);
+    color: rgb(200,200,200);
 }
 
 .tabs > li {
@@ -16,12 +16,12 @@ body {
     padding-right:0.6em;
     padding-bottom:0.6em;
 } .tabs > li > a:hover {
-    background-color: rgb(200,200,200);
+    background-color: rgb(40,40,40);
 } .tabs > li.active > a {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0,0,0);
     border-width: 1px;
     border-style: solid;
-    border-color: rgb(140,140,140) rgb(140,140,140) transparent;
+    border-color: rgb(100,100,100) rgb(100,100,100) transparent;
 }
 
 .btn {
@@ -31,12 +31,12 @@ body {
     padding: 6px 12px;
     border: 1px solid transparent;
     border-radius:0px;
-    border-color: rgb(140,140,140);
+    border-color: rgb(100,100,100);
     font-size: 14px;
 } .btn:hover {
-    color: rgb(255,255,255);
-    background: rgb(140,140,140);
-} .btn:active {
-    color: rgb(200,200,200);
+    color: rgb(0,0,0);
     background: rgb(100,100,100);
+} .btn:active {
+    color: rgb(50,50,50);
+    background: rgb(140,140,140);
 }

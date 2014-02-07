@@ -38,7 +38,7 @@ function start(w, h) {
 function initCanvas(w, h) {
     horizAspect = (1.*w)/h;
     $("#testcanvas").html(
-            '<canvas id="glcanvas" width="'+w+'" height="'+h+'">'+
+            '<canvas id="glcanvas" width="'+w+'" height="'+h+'" style="border:1px solid rgb(100,100,100);">'+
             'Your browser doesn\'t appear to support the <canvas> element.'+
             '</canvas>');
 }
