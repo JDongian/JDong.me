@@ -39,18 +39,17 @@ function initCanvas(w, h) {
     horizAspect = (1.*w)/h;
     $("#testcanvas").html(
             '<canvas id="glcanvas" width="'+w+'" height="'+h+'">'+
-            'Your browser doesn\'t appear to support the HTML5 <code>&lt;canvas&gt;</code> element.'+
+            'Your browser doesn\'t appear to support the <canvas> element.'+
             '</canvas>');
-    return $("#glcanvas");
 }
 function initWebGL() {
     gl = null;
     try {
-        gl = canvas.getContext("experimental-webgl");
-    } catch(e) {
-    }
+        gl = canvas.getContext("webgl") ||
+             canvas.getContext("experimental-webgl");
+    } catch(e) {}
     if (!gl) {
-        alert("Unable to initialize WebGL. Your browser may not support it.");
+        $("#error").html("Unable to initialize WebGL.");
     }
 }
 function initBuffers() {
@@ -117,7 +116,7 @@ function initShaders() {
     gl.attachShader(shaderProgram, fragmentShader);
     gl.linkProgram(shaderProgram);
     if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        alert("Unable to initialize the shader program.");
+        $("#error").html("Unable to initialize the shader program.");
     }
     gl.useProgram(shaderProgram);
     vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
@@ -126,29 +125,25 @@ function initShaders() {
     gl.enableVertexAttribArray(vertexColorAttribute);
 }
 function getShader(gl, id) {
-    var shaderScript = document.getElementById(id);
-    // Didn't find an element with the specified ID; abort.
+    var shaderScript = $("#"+id);
     if (!shaderScript) return null;
-    var theSource = "";
-    var currentChild = shaderScript.firstChild;
-    while(currentChild) {
-        if (currentChild.nodeType == 3) {
-            theSource += currentChild.textContent;
-        }
-        currentChild = currentChild.nextSibling;
-    }
+    src = shaderScript.html();
     var shader;
-    if (shaderScript.type == "x-shader/x-fragment") {
-        shader = gl.createShader(gl.FRAGMENT_SHADER);
-    } else if (shaderScript.type == "x-shader/x-vertex") {
-        shader = gl.createShader(gl.VERTEX_SHADER);
-    } else {
-        return null;  // Unknown shader type
+    switch (shaderScript.attr("type")) {
+        case "x-shader/x-fragment":
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+            break;
+        case "x-shader/x-vertex":
+            shader = gl.createShader(gl.VERTEX_SHADER);
+            break;
+        default:
+            $("#error").html("Unexpected shader type.");
+            return null;
     }
-    gl.shaderSource(shader, theSource);
+    gl.shaderSource(shader, src);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        alert("An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader));
+        $("#error").html("An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader));
         return null;
     }
     return shader;
@@ -192,133 +187,3 @@ function mvRotate(angle, v) {
     var m = Matrix.Rotation(inRadians, $V([v[0], v[1], v[2]])).ensure4x4();
     multMatrix(m);
 }
-/*
-var gl;
-var squareVerticesBuffer;
-var mvMatrix;
-var shaderProgram;
-var vertexPositionAttribute;
-var perspectiveMatrix;
-var width, height;
-var horizAspect;
-
-function start(w, h) {
-    horizAspect = w/h;
-    initCanvas(w, h);
-    canvas = document.getElementById("glcanvas");
-    initWebGL(canvas);
-    if (gl) {
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Clear to black, fully opaque
-        gl.clearDepth(1.0);                 // Clear everything
-        gl.enable(gl.DEPTH_TEST);           // Enable depth testing
-        gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
-        initShaders();
-        initBuffers();
-        // Set up to draw the scene periodically.
-        setInterval(drawScene, 15);
-    }
-}
-function initCanvas(w, h) {
-    width = w;
-    height = h;
-    horizAspect = w/h;
-    $("#testcanvas").html(
-            '<canvas id="glcanvas" width="'+w+'" height="'+h+'">'+
-            'Your browser doesn\'t appear to support the HTML5 <code>&lt;canvas&gt;</code> element.'+
-            '</canvas>');
-    return $("#glcanvas");
-}
-function initWebGL(canvas) {
-    gl = null;
-    try {
-        gl = canvas.getContext("experimental-webgl");
-    } catch(e) {
-    }
-    // If we don't have a GL context, give up now
-    if (!gl) {
-        alert("Unable to initialize WebGL. Your browser may not support it.");
-    }
-}
-function initBuffers() {
-    squareVerticesBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
-    var vertices = [
-        1.0,  1.0,  0.0,
-        -1.0, 1.0,  0.0,
-        1.0,  -1.0, 0.0,
-        -1.0, -1.0, 0.0
-            ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-}
-function drawScene() {
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    // Establish the perspective with which we want to view the
-    // scene. Our field of view is 45 degrees, with a width/height
-    // and 100 units away from the camera.
-    perspectiveMatrix = makePerspective(45, horizAspect, 0.1, 100.0);
-    loadIdentity();
-    mvTranslate([-0.0, 0.0, -6.0]);
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
-    gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
-    setMatrixUniforms();
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-}
-function initShaders() {
-    var fragmentShader = getShader(gl, "shader-fs");
-    var vertexShader = getShader(gl, "shader-vs");
-    shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    gl.linkProgram(shaderProgram);
-    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        alert("Unable to initialize the shader program.");
-    }
-    gl.useProgram(shaderProgram);
-    vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
-    gl.enableVertexAttribArray(vertexPositionAttribute);
-}
-function getShader(gl, id) {
-    var shaderScript = document.getElementById(id);
-    if (!shaderScript) return null;
-    // Walk through the source element's children, building the
-    // shader source string.
-    var theSource = "";
-    var currentChild = shaderScript.firstChild;
-    while(currentChild) {
-        if (currentChild.nodeType == 3) {
-            theSource += currentChild.textContent;
-        }
-        currentChild = currentChild.nextSibling;
-    }
-    var shader;
-    if (shaderScript.type == "x-shader/x-fragment") {
-        shader = gl.createShader(gl.FRAGMENT_SHADER);
-    } else if (shaderScript.type == "x-shader/x-vertex") {
-        shader = gl.createShader(gl.VERTEX_SHADER);
-    } else {
-        return null;  // Unknown shader type
-    }
-    gl.shaderSource(shader, theSource);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        alert("An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader));
-        return null;
-    }
-    return shader;
-}
-function loadIdentity() {
-    mvMatrix = Matrix.I(4);
-}
-function multMatrix(m) {
-    mvMatrix = mvMatrix.x(m);
-}
-function mvTranslate(v) {
-    multMatrix(Matrix.Translation($V([v[0], v[1], v[2]])).ensure4x4());
-}
-function setMatrixUniforms() {
-    var pUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-    gl.uniformMatrix4fv(pUniform, false, new Float32Array(perspectiveMatrix.flatten()));
-    var mvUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
-    gl.uniformMatrix4fv(mvUniform, false, new Float32Array(mvMatrix.flatten()));
-}
-*/

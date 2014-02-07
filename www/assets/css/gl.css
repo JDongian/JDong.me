@@ -5,10 +5,27 @@ body {
     font-size: 12px;
 }
 
+.tabs > li {
+    float:left;
+    text-decoration:none;
+    list-style: none outside none;
+} .tabs > li > a {
+    padding-top:0.3em;
+    padding-left:0.6em;
+    padding-right:0.6em;
+    padding-bottom:0.6em;
+    color: rgb(0, 0, 0);
+} .tabs > li.active > a {
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(140,140,140) rgb(140,140,140) transparent;
+}
+
 .btn {
     display: inline-block;
     text-decoration: none;
-    margin-top: 0.6em;
+    margin: 0.6em;
     padding: 6px 12px;
     border: 1px solid transparent;
     border-radius:0px;
