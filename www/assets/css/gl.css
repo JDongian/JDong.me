@@ -3,6 +3,7 @@ body {
     background-repeat: repeat;
     font-family: Verdana,Liberation Sans,DejaVu Sans,sans-serif;
     font-size: 12px;
+    background-color: rgb(0,0,0);
     color: rgb(0,0,0);
 }
 .tab-holder {

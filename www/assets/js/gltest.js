@@ -20,6 +20,8 @@ var perspectiveMatrix;
 
 var horizAspect;
 
+var drawSceneCode;
+
 function start(w, h) {
     initCanvas(w, h);
     canvas = document.getElementById("glcanvas");
@@ -32,7 +34,7 @@ function start(w, h) {
         initShaders();
         initBuffers();
         // Set up to draw the scene periodically.
-        setInterval(drawScene, 15);
+        drawSceneCode = setInterval(drawScene, 16);
     }
 }
 function initCanvas(w, h) {
