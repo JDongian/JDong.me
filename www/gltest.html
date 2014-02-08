@@ -57,7 +57,7 @@
     <hr>
     <div id="code"
         style="height:48em;margin:16px;float:left;overflow:auto;">
-        <div style="height:3%;margin:0;padding:0;">
+        <div class="tab-holder" style="height:3%;">
             <ul class="tabs" style="margin-left:9px;">
                 <li class="active"><a>drawScene</a></li>
                 <li><a>initBuffers</a></li>
@@ -75,7 +75,10 @@
     <script src="/assets/ace/ace.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         //TODO: eventually use cookies
-        var isDark = true;
+        var isDark = new Date();
+        isDark = isDark.getHours();
+        isDark = 18 < isDark ||
+                      isDark < 8;
         if (isDark) {
             $("#css-main").attr("href", "/assets/css/gl-dark.css");
         } else {
@@ -94,9 +97,10 @@
         editor.gotoLine(1);
         //Tabs
         $(".tabs > li").click(function() {
-            alert($(this).html());
-            //this.addClass("active");
-            //$(".tabs > li.active").removeClass("active");
+            $(".tabs > li.active").removeClass("active");
+            $(this).addClass("active");
+            editor.setValue(eval($(this).children("a").html()).toString()); 
+            editor.gotoLine(1);
         });
         //Resizing
         $("#paramWidth, #paramHeight").keypress(function(e) {
