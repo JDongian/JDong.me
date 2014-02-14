@@ -96,6 +96,7 @@
         editor.setValue(drawScene.toString()); 
         editor.gotoLine(1);
         $("#editor").keyup(function() {
+            //do I care that much..?
             if($(".ace_error").html() == null && $(".ace_info").html() == null) {
                 fSwap($("li.active > a").html(), editor.getValue());
             }
@@ -103,6 +104,7 @@
         //Function hotswapper
         function fSwap(func, code) {
             eval(func+" = "+code);
+            eval(func+"()"); 
             if (func == "drawScene") {
                 clearInterval(drawSceneCode);
                 drawSceneCode = setInterval(drawScene, 16);
@@ -124,10 +126,14 @@
         });
         //Fluid layout
         function flow() {
+            /*
             //$("#code").css("height", $(window).height()-64);
             $("#code").css("width", parseInt($(window).width()*0.6)-16*2);
             //$("#settings").css("height", $(window).height()-64);
             $("#settings").css("width", parseInt($(window).width()*0.4)-16-4);
+            */
+            $("#code").css("width", parseInt($(window).width())-16*2);
+            $("#settings").css("width", 0);
         }
         flow();
         $(window).resize(flow);

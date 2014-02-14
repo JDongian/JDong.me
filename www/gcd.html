@@ -19,7 +19,7 @@
   <script>
 $("#eval").click(function() {$("#result").html(gcd($("#a").val(), $("#b").val()));});
     function gcd(a,b) {
-        var COUNT = 7;
+//        var COUNT = 7;
         var d = 1;
         var p;
         if (a > b) {
@@ -28,14 +28,13 @@ $("#eval").click(function() {$("#result").html(gcd($("#a").val(), $("#b").val())
             b = p;
         }
         while (1) {
-            COUNT -= 1;
-            if (COUNT < 0)
-                return -1;
+//          COUNT -= 1;
+//          if (COUNT < 0)
+//              return -1;
             if (a == b || a == 1) {
                 return d*a;
             }
             p = (a%2)*2+(b%2);
-            alert(p+":"+a+", "+b);
             switch (p) {
                 //both even 
                 case 0:

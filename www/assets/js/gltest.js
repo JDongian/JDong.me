@@ -77,10 +77,6 @@ function initBuffers() {
 }
 function drawScene() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    // Establish the perspective with which we want to view the
-    // scene. Our field of view is 45 degrees, with a width/height
-    // ratio of 640:480, and we only want to see objects between 0.1 units
-    // and 100 units away from the camera.
     perspectiveMatrix = makePerspective(45, horizAspect, 0.1, 100.0);
     loadIdentity();
     mvTranslate([-0.0, 0.0, -6.0]);
@@ -94,19 +90,10 @@ function drawScene() {
     setMatrixUniforms();
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     mvPopMatrix();
-    // Update the rotation for the next draw, if it's time to do so.
     var currentTime = (new Date).getTime();
     if (lastSquareUpdateTime) {
         var delta = currentTime - lastSquareUpdateTime;
         squareRotation += (10 * delta) / 1000.0;
-        //squareXOffset += xIncValue * ((30 * delta) / 1000.0);
-        //squareYOffset += yIncValue * ((30 * delta) / 1000.0);
-        //squareZOffset += zIncValue * ((30 * delta) / 1000.0);
-        //if (Math.abs(squareYOffset) > 2.5) {
-        //    xIncValue = -xIncValue;
-        //    yIncValue = -yIncValue;
-        //    zIncValue = -zIncValue;
-        //}
     }
     lastSquareUpdateTime = currentTime;
 }
