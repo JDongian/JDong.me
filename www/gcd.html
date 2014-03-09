@@ -14,10 +14,29 @@
   <body>
   <input id="a" type="number" step="1">
   <input id="b" type="number" step="1">
-  <input id="eval" type="button" value="Evaluate!">
-  <div id="result"></div>
+  <!--<input id="eval" type="button" value="Evaluate!">--!>
+  <div id="result">
+  </div>
+  <div id="steps">
+  </div>
   <script>
-$("#eval").click(function() {$("#result").html(gcd($("#a").val(), $("#b").val()));});
+  function setgcd() {
+      var a = $("#a").val();
+      var b = $("#b").val();
+      if(a && b &&
+         a == parseInt(a) &&
+         b == parseInt(b)) {
+      $("#result").html("("+a+", "+b+") = "+gcd(a, b)+".");
+      }
+  }
+  $("#eval").click(function() {
+    setgcd();
+  });
+  $("#a, #b, #eval").keydown(function (e) {
+      if(e.keyCode || e.which == 13) {
+        setgcd();
+      }
+  });
     function gcd(a,b) {
 //        var COUNT = 7;
         var d = 1;
