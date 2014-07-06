@@ -1,4 +1,4 @@
 JDong.me
 ========
 
-This is [me](jdong.me)
+This is [me](http://jdong.me)
