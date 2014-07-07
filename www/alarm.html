@@ -1,0 +1,133 @@
+<head>
+    <link href='http://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
+<style>
+body {
+    font-family: 'PT Mono', Courier New, monospace;
+    background: black;
+    color: white;
+}
+#main {
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+a.hidden {
+    text-decoration: none;
+    font-size: 10px;
+    color: #000;
+} a.hidden:hover {
+    text-decoration: underline;
+    color: #009;
+} a.hidden:active {
+    color: #505;
+}
+.content {
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+}
+a.external {
+    font-size: 10px;
+}
+a.btn {
+    display: inline-block;
+    text-decoration: none;
+    margin: 0.6em;
+    padding: 6px 12px;
+    border: none;
+    font-size: 14px;
+    color: #DDD;
+} a.btn:hover {
+    background: #222;
+    color: #FFF;
+} a.btn:active {
+    background: #444;
+    color: #2C3;
+}
+#time {
+    font-size: 120px;
+    color: #C12;
+}
+</style>
+</head>
+<body>
+<div id='main'>
+    <div class='content'>
+        <div id='time'>
+            00:00:00
+        </div>
+        <a id='set' class='btn' href='#'>Set Alarm</a>
+        <br>
+        <input id='alarm' type='text' placeholder='8:00 am' size='8'> 
+        <div id='status'>
+            Alarm not set!
+        </div>
+        <a id='status-hider' class='hidden' href='#'>Hide status</a>
+    </div>
+</div>
+    <a class='hidden external' href='/'>Home</a>
+    <a class='hidden external' href='//time.gov'>Official US Time</a>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+var lastAlarm = -1;
+var alarmTime = -1;
+var snd = new Audio("alarm.wav");
+$('#status-hider').click(function() {
+    $('#status').css('color', '#000');
+});
+$('#set').click(function() {
+    clearTimeout(lastAlarm);
+    alarmTime = parseTime($('#alarm').val());
+    $(this).blur();
+    var timeout = setDiff();
+    lastAlarm = setTimeout(doAlarm, ((timeout[0]*60+timeout[1])*60+timeout[2])*1000);
+    setDiff();
+    return false;
+});
+function pad(n) {
+    return ("000"+n).slice(-2);
+}
+function setDiff() {
+    var apresMidi = alarmTime[3] === 'pm';
+    var hours = +alarmTime[1]+(apresMidi?12:0);
+    var minutes = +alarmTime[2];
+    var timeout = diffTime(hours, minutes);     
+    if(timeout[1] < 0) {
+        timeout[1] += 60;
+        timeout[0] -= 1;
+    }
+    if(lastAlarm != -1) {
+        $('#status').html('Alarm in '+timeout[0]+' hours and '+timeout[1]+' minutes!');
+    }
+    return timeout;
+}
+function setTime() {
+    var now = new Date();
+    var humanTime = pad(now.getHours())+':'+
+                    pad(now.getMinutes())+':'+
+                    pad(now.getSeconds());
+    $('#time').html(humanTime);
+}
+function diffTime(hour, minute) {
+    var now = new Date();
+    //Check if they are waiting for tomorrow.
+    var dH = hour>=now.getHours()?hour-now.getHours():24-now.getHours()+hour;
+    var dM = minute-now.getMinutes();
+    if(dH == 0 && dM < 0) {dH = 24;}
+    var dS = -now.getSeconds();
+    return [dH,dM,dS];
+}
+function parseTime(str) {
+    //TODO: support military time
+    return str.match(/^\s*([0-9]{1,2}):([0-9][0-9])[ ]*([ap]m)\s*$/);
+}
+function doAlarm() {
+    snd.play();
+}
+while (false) {
+    $('#test').html(Date.now());
+}
+while (Date.now() % 10) {}
+setInterval(setTime, 500);
+setInterval(setDiff, 13000);
+</script>
+</body>
