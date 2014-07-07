@@ -1,18 +1,50 @@
-<head>
-</head>
-<link href="/assets/css/normalize.css" rel="stylesheet">
-<body style="padding:0;margin:0;height:100%;width:100%;">
-    <div style="background:black;height:2em;width:100%;"></div>
-    <div style="margin:1em;">
-        Personal website for Joshua Dong.
-        <br>
-        In development.
-        <br>
-        <a href="math.html">les maths</a>
-        <br>
-        <a href="gltest.html">many pixel</a>
-        <a href="ktest.html">many word</a>
-        <!--<a href="links.html">many link</a>-->
-        <a href="souvenir.html">many badge</a>
-    </div>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+        <title>Joshua Dong's Personal Website</title>
+        <link href="/assets/css/normalize.css" rel="stylesheet">
+        <link id="css-main" href="/assets/css/gl-dark.css" rel="stylesheet">
+        <script type="text/javascript" src="/assets/js/jquery-2.1.0.min.js"></script>
+    </head>
+    <body style="padding:0;margin:0;height:100%;width:100%;background-image: url('/assets/img/geometry.png');">
+        <div style="background:black;height:2em;width:100%;"></div>
+        <div style="margin:1em;">
+            Personal website for Joshua Dong.
+            <br>
+            In development.
+            <br>
+            <a href="resume.html">Resume</a>
+            <br>
+            <br>
+            <a href="gltest.html">WebGL sandbox</a>
+            <br>
+            <a href="alarm.html">Alarm</a>
+            <br>
+            <a href="ktest.html">Korean Quiz</a>
+            <!--<a href="links.html">many link</a>-->
+            <br>
+            <a href="souvenir.html">External Links</a>
+            <br>
+            <br>
+            <a href="math.html">math tools</a>
+            <br>
+        </div>
+        <script type="text/javascript">
+            var isDark = new Date();
+            isDark = isDark.getHours();
+            isDark = 18 < isDark ||
+            isDark < 8;
+            if (isDark) {
+                $("#css-main").attr("href", "/assets/css/gl-dark.css");
+            } else {
+                $("#css-main").attr("href", "/assets/css/gl.css");
+            }
+        </script>
+    </body>
+</html>

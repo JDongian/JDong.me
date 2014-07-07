@@ -48,6 +48,7 @@
         <div style="display:inline;margin:0 auto;">
           <label for="width">Width:</label>
           <input id="paramWidth" type="number" name="width" value="640" step="20" size="4">
+          <a id="autodim" class="btn-small">Auto</a>
         </div>
         <div>
           <a id="changeDim" class="btn">Set Dimensions</a>
@@ -55,6 +56,8 @@
       </div>
     </div>
     <hr>
+    <a id="fn_edit" class="btn-toggle active">View JS</a>
+    <a id="shader_edit" class="btn-toggle">View Shaders</a>
     <div id="code"
         style="height:48em;margin:16px;float:left;overflow:auto;">
         <div class="tab-holder" style="height:3%;">
@@ -97,10 +100,17 @@
         editor.gotoLine(1);
         $("#editor").keyup(function() {
             //do I care that much..?
-            if($(".ace_error").html() == null && $(".ace_info").html() == null) {
-                fSwap($("li.active > a").html(), editor.getValue());
+                if($(".ace_error").html() == null && $(".ace_info").html() == null) {
+                if (viewMode == "JS") {
+                    fSwap($("li.active > a").html(), editor.getValue());
+                } else {
+                    sSwap($("li.active > a").html(), editor.getValue());
+                }
             }
         });
+        //Shader hotswapper
+        function sSwap(shader, code) {
+        }
         //Function hotswapper
         function fSwap(func, code) {
             eval(func+" = "+code);

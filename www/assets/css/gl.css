@@ -30,6 +30,38 @@ body {
     border-color: rgb(200,200,200) rgb(200,200,200) transparent;
 }
 
+.btn-toggle {
+    display: inline-block;
+    text-decoration: none;
+    margin: 0px;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius:0px;
+    border-color: rgb(140,140,140);
+    font-size: 14px;
+} .btn-toggle:hover {
+    color: rgb(255,255,255);
+    background: rgb(140,140,140);
+} .btn-toggle:active {
+    color: rgb(200,200,200);
+    background: rgb(100,100,100);
+}
+.btn-small {
+    display: inline-block;
+    text-decoration: none;
+    margin: 5px;
+    padding: 3px 6px;
+    border: 1px solid transparent;
+    border-radius:0px;
+    border-color: rgb(140,140,140);
+    font-size: 14px;
+} .btn-small:hover {
+    color: rgb(255,255,255);
+    background: rgb(140,140,140);
+} .btn-small:active {
+    color: rgb(200,200,200);
+    background: rgb(100,100,100);
+}
 .btn {
     display: inline-block;
     text-decoration: none;
