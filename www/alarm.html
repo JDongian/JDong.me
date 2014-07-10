@@ -129,5 +129,14 @@ while (false) {
 while (Date.now() % 10) {}
 setInterval(setTime, 500);
 setInterval(setDiff, 13000);
+function flow() {
+    //if ($(window).height() > 480) {
+        var newSize = 2*$(window).height()<$(window).width()?($(window).height()-240)/1.6:($(window).width()-480)
+        $("#time").css("font-size", newSize/8+"px");
+    //}
+}
+flow();
+//Fluid layout
+$(window).resize(flow);
 </script>
 </body>
