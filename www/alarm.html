@@ -1,5 +1,6 @@
 <head>
     <link href='http://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
+    <link href="assets/js/jquery-clockpicker.min.css" rel="stylesheet" type="text/css">
 <style>
 body {
     font-family: 'PT Mono', Courier New, monospace;
@@ -57,7 +58,7 @@ a.btn {
         </div>
         <a id='set' class='btn' href='#'>Set Alarm</a>
         <br>
-        <input id='alarm' type='text' placeholder='8:00 am' size='8'> 
+        <input id='alarm' type='text' 9laceholder='8:00 am' size='8'> 
         <div id='status'>
             Alarm not set!
         </div>
@@ -67,6 +68,7 @@ a.btn {
     <a class='hidden external' href='/'>Home</a>
     <a class='hidden external' href='//time.gov'>Official US Time</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/assets/js/jquery-clockpicker.min.js"></script>
 <script>
 var lastAlarm = -1;
 var alarmTime = -1;
@@ -83,12 +85,15 @@ $('#set').click(function() {
     setDiff();
     return false;
 });
+var alarmInput = $("#alarm");
+alarmInput.clockpicker({
+    autoclose: true
+});
 function pad(n) {
     return ("000"+n).slice(-2);
 }
 function setDiff() {
-    var apresMidi = alarmTime[3] === 'pm';
-    var hours = +alarmTime[1]+(apresMidi?12:0);
+    var hours = +alarmTime[1];
     var minutes = +alarmTime[2];
     var timeout = diffTime(hours, minutes);     
     if(timeout[1] < 0) {
@@ -118,7 +123,7 @@ function diffTime(hour, minute) {
 }
 function parseTime(str) {
     //TODO: support military time
-    return str.match(/^\s*([0-9]{1,2}):([0-9][0-9])[ ]*([ap]m)\s*$/);
+    return str.match(/^\s*([0-9]{1,2}):([0-9][0-9])\s*$/);
 }
 function doAlarm() {
     snd.play();
