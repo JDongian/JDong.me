@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joshua Dong's website</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+</head>
+<body>
+<style>
+    .custom-menu-wrapper {
+        background-color: #808080;
+        margin-bottom: 2.5em;
+        white-space: nowrap;
+        position: relative;
+    }
+
+    .custom-menu {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .custom-menu .pure-menu-link,
+    .custom-menu .pure-menu-heading {
+        color: white;
+    }
+
+    .custom-menu .pure-menu-link:hover,
+    .custom-menu .pure-menu-heading:hover {
+        background-color: transparent;
+    }
+
+    .custom-menu-top {
+        position: relative;
+        padding-top: .5em;
+        padding-bottom: .5em;
+    }
+
+    .custom-menu-brand {
+        display: block;
+        text-align: center;
+        position: relative;
+    }
+
+    .custom-menu-toggle {
+        width: 44px;
+        height: 44px;
+        display: block;
+        position: absolute;
+        top: 3px;
+        right: 0;
+        display: none;
+    }
+
+    .custom-menu-toggle .bar {
+        background-color: white;
+        display: block;
+        width: 20px;
+        height: 2px;
+        border-radius: 100px;
+        position: absolute;
+        top: 22px;
+        right: 12px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    .custom-menu-toggle .bar:first-child {
+        -webkit-transform: translateY(-6px);
+        -moz-transform: translateY(-6px);
+        -ms-transform: translateY(-6px);
+        transform: translateY(-6px);
+    }
+
+    .custom-menu-toggle.x .bar {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .custom-menu-toggle.x .bar:first-child {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    .custom-menu-screen {
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        transition: all 0.5s;
+        height: 3em;
+        width: 70em;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
+
+    .custom-menu-tucked .custom-menu-screen {
+        -webkit-transform: translateY(-44px);
+        -moz-transform: translateY(-44px);
+        -ms-transform: translateY(-44px);
+        transform: translateY(-44px);
+    }
+
+    @media (max-width: 62em) {
+
+        .custom-menu {
+            display: block;
+        }
+
+        .custom-menu-toggle {
+            display: block;
+            display: none\9;
+        }
+
+        .custom-menu-bottom {
+            position: absolute;
+            width: 100%;
+            border-top: 1px solid #eee;
+            background-color: #808080\9;
+            z-index: 100;
+        }
+
+        .custom-menu-bottom .pure-menu-link {
+            opacity: 1;
+            -webkit-transform: translateX(0);
+            -moz-transform: translateX(0);
+            -ms-transform: translateX(0);
+            transform: translateX(0);
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        .custom-menu-bottom.custom-menu-tucked .pure-menu-link {
+            -webkit-transform: translateX(-140px);
+            -moz-transform: translateX(-140px);
+            -ms-transform: translateX(-140px);
+            transform: translateX(-140px);
+            opacity: 0;
+            opacity: 1\9;
+        }
+
+        .pure-menu-horizontal.custom-menu-tucked {
+            z-index: -1;
+            top: 45px;
+            position: absolute;
+            overflow: hidden;
+        }
+
+    }
+</style>
+<div class="custom-menu-wrapper">
+    <div class="pure-menu custom-menu custom-menu-top">
+        <a href="#" class="pure-menu-heading custom-menu-brand">Joshua Dong</a>
+        <a href="#" class="custom-menu-toggle" id="toggle"><s class="bar"></s><s class="bar"></s></a>
+    </div>
+    <div class="pure-menu pure-menu-horizontal pure-menu-scrollable custom-menu custom-menu-bottom custom-menu-tucked" id="tuckedMenu">
+        <div class="custom-menu-screen"></div>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/contact.html" class="pure-menu-link">Contact</a></li>
+            <li class="pure-menu-item"><a href="/github.html" class="pure-menu-link">GitHub</a></li>
+            <li class="pure-menu-item"><a href="/resume.html" class="pure-menu-link">Resume</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    (function (window, document) {
+    document.getElementById('toggle').addEventListener('click', function (e) {
+        document.getElementById('tuckedMenu').classList.toggle('custom-menu-tucked');
+        document.getElementById('toggle').classList.toggle('x');
+    });
+    })(this, this.document);
+</script>
+<style>
+    .main {
+        padding: 2em;
+        color: black;
+    }
+</style>
+
+<div class="main">
+    <div><a href="/resume.pdf">Latest resume, PDF</a><div>
+
+    <h1>Summary</h1>
+    <ul>
+        <li>Looking to learn something new in a challenging 2016 summer internship</li>
+        <li>Experience in testing, automation, AI, web technologies, and project leadership</li>
+        <li>Graduating in 2017 with statistics and software engineering</li>
+    </ul>
+
+    <h1>Education</h1> 
+    <h2>University of Texas at Austin 2012-2017</h2>
+    <ul>
+        <li>Electrical Engineering and Mathematics double major, expected graduation May 2017</li>
+        <li>IEEE Computer Society project manager and corporate relations officer (2014-2015)</li>
+    </ul>
+
+    <h2>Korea University Semester Abroad 2015</h2>
+    <ul>
+        <li>Information theory, programming languages, pattern recognition, and Korean language classes</li>
+    </ul>
+
+    <h1>Experience</h1>
+    <h2>GoDaddy Internship 2015</h2>
+    <ul>
+        <li>LESS+React.js work for scalable website builder tools</li>
+        <li>Node.js REST Ah2I development for URL shortener interface</li>
+        <li>.NET backend development and testing in C# for Windows IIS Ah2Is</li>
+    </ul>
+
+    <h2>Python-Jamo</h2>
+    <a href="https://pypi.python.org/pypi/jamo">pypi.python.org/pypi/jamo</a>
+    <ul>
+        <li>Python module for Hangul character synthesis and decomposition into jamo</li>
+        <li>Heavily tested with Travis CI and Python unittest with Sphinx documentation on ReadTheDocs</li>
+    </ul>
+
+    <h2>Minecraft Client Ah2I (MCC) 2014-2015</h2>
+    <a href="https://www.github.com/NosotrosNueces/mcc">github.com/NosotrosNueces/mcc</a>
+    <ul>
+        <li>h2ure C client Ah2I for automation, game-mechanic testing, bot creation</li>
+        <li>Event-driven design wrapping socket decryption/pthread layer designed from scratch</li>
+    </ul>
+
+    <h2>MIT Battlecode 2014, 2015</h2>
+    <a href="http://www.battlecode.org/">battlecode.org</a>
+    <ul>
+        <li>Java AI programing (vector fields, genetic algorithm parameterization, OOh2 design, A*, CBR)</li>
+        <li>Case Based Learning approaches and game abstraction using Java 8</li>
+    </ul>
+
+    <h2>Undergraduate Research under Sriram Vishwanath 2013-2014</h2>
+    <ul>
+        <li>Lead Ourly app development team as integration supervisor and project manager</li>
+        <li>Flask, h2ostgreSQL, Android, ih2hone, Node.js, MongoDB development</li>
+    </ul>
+
+    <h2>RetailMeNot, Inc. Summer Internships 2013, 2014</h2>
+    <ul>
+        <li>Designed machine learning spam filter for user-generated content</li>
+        <li>Implemented REST Ah2I backend for Disqus-like commenting system</li>
+        <li>Python AWS CRUD Ah2I developer: EC2, S3, SQS with unittests running on Travis CI</li>
+    </ul>
+
+    <h2>RTS AI Development 2010-2012</h2>
+    <ul>
+        <li>Led team for 2011 AI for Interactive Digital Entertainment (AIIDE) Starcraft AI competition  
+        </li>
+        <li>Dortmund University of Technology’s Computational Intelligence and Games (CIG) 2011 Starcraft AI
+        competitor <a href="https://www.s11-www.cs.uni-dortmund.de/rts-competition/starcraft-cig2011">s11-www.cs.uni-dortmund.de/rts-competition/starcraft-cig2011</a></li>
+    </ul>
+
+</div>
+
+</body>
+</html>
