@@ -1,0 +1,18 @@
+gdisk /dev/sda
+n
+3
+
+
+
+w
+y
+mkfs.ext4 /dev/sda3
+mount /dev/sda3 /mnt
+pacstrap /mnt base
+genfstab /mnt > /mnt/etc/fstab
+arch-chroot /mnt
+pacman -S --noconfirm syslinux gptfdisk
+syslinux-install_update -iam
+mkinitcpio -p linux
+exit
+reboot
