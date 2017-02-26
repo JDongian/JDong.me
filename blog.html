@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joshua Dong's website</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css"> 
 </head>
 <body>
 <style>
@@ -183,18 +183,186 @@
     });
     })(this, this.document);
 </script>
+
 <style>
     .main {
-        padding: 2em;
+        padding: 0;
         color: black;
+        width: 38em;
+        margin-left: 3em;
+        margin-top: 60px;
+    }
+    code {
+        font-family: monospace;
+    }
+    pre code {
+        background-color: #EED;
+    }
+    kbd {
+        display: inline-block;
+        margin: 0 .1em;
+        padding: .1em .6em;
+        font-size: 12px;
+        line-height: 0.9em;
+        color: #242729;
+        text-shadow: 0 1px 0 #FFF;
+        background-color: #e8eae3;
+        border: 1px solid #adb3b9;
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(12,13,14,0.2), 0 0 0 2px #FFF inset;
+        white-space: nowrap;
     }
 </style>
 
 <div class="main">
+    <h1>How to Arch Linux</h1>
+
+    <div class="date" itemprop="datePublished" content=""><!--TODO: rel time @ CST 1AM-->
+        26 February 2017
+    </div>
+
+    <h3>Preparation</h3>
+    <p>
+        First, prepare yourself. Think and answer:
+        <ul>
+            <li>Are you trying to be cool/edgy?</li>
+            <li>Are you too pragmatic to live the FOSS life?</li>
+            <li>Does the term "CLI" foster warm fuzzy feelings?</li>
+            <li>Does not knowing what bootloader your system uses discomfort you?</li>
+            <li>Do you get mad when the new version your operating system
+                decides to send your search results to Amazon,
+                so you give up and switch to Debian but get irked by
+                obsolete documentation and package updates that move so slowly
+                that you often need to download source, compile,
+                then link back to your package manager (after removing any
+                conflicts), so often that you've learned all the error messages
+                that <code>dpkg -i</code> can throw at you?</li>
+        </ul>
+        Just kidding about the last one. Sort of. But do be ready to learn a
+        lot through trial and error, and reading the Arch Wiki.
+    </p>
+
+    <p>
+        You will need:
+        <ul>
+            <li>Computer (bigger is better)</li>
+            <li>Internet (wired is easier)</li>
+            <li>Bootable media (flash drives are easy)</li>
+            <li>Reliable access to the <a href="https://wiki.archlinux.org/index.php/Main_page">Arch Wiki</a></li>
+        </ul>
+    </p>
+
+    <p>
+        Prepare your installation media.
+        <a href="https://www.archlinux.org/download/">Download Arch Linux</a>
+        and <code>dd</code>.
+        If you've forgotten how to <code>dd</code>, perhaps this command will help:
+        <pre><code>dd if=archlinux-2017.02.01-dual.iso of=<b>/dev/sdb</b></code></pre>
+        Don't forget to <code>lsblk</code>. 
+        <br>
+        If you don't know what you're doing,
+        <a href="https://wiki.archlinux.org/index.php/Category:Getting_and_installing_Arch">consult the Arch Wiki</a>.
+    </p>
+    
+    <h3>Installing</h3>
+    <p>
+        I'm going to assume you've booted into Arch Linux now from your bootable media.
+    </p>
+
+    <p>
+        If you have an Ethernet connection, your internet should be working already.
+        Otherwise, run <pre><code>wifi-menu</code></pre> to connect to your wireless network.
+    </p>
+
+    <p>
+        Update your system time.
+        <pre><code>timedatectl set-ntp true</code></pre>
+        If your system time is off, bad things happen. Like SSL/TLS certificates not working.
+    </p>
+
+    <p>
+        Hopefully you know which disk you want to install Arch Linux onto. If not,
+        run <code>lsblk</code> and be extra sure. Partition your disks.
+        <pre><code>cfdisk</code></pre>
+        It should be fast and easy. If you don't know why you're partitioning the disks,
+        just make a big, bootable partition:
+        <img src="/assets/img/blog2-cfdisk.png">
+    </p>
+
+    <p>
+        Now format your partition(s).
+        If using an SSD, <code>f2fs</code> is nice for longevity.
+        <code>ReiserFS</code> is nice for your log files on <code>/var</code>.
+        If you're not doing anything remarkable, then <code>ext4</code> will be good:
+        <pre><code>mkfs.ext4 /dev/sda1</code></pre>
+    </p>
+
+    <p>
+        Mount the file system. <code>/mnt</code> is the standard mount point.
+        <pre><code>mount /dev/sda1 /mnt</code></pre>
+        If you had multiple partitions, then you will need to make the
+        directories on which to mount the partitions.
+    </p>
+
+    <p>
+        Now that your disks are prepared, it is time to add Arch Linux files.
+        Choose where you would like to download from.
+        <pre><code>vim /etc/pacman.d/mirrorlist</code></pre>
+        If you don't know how to use <code>vim</code>, press the following keys after
+        opening the file:
+        <pre><code>/States<kbd>Enter</kbd>jddggP:q<kbd>Enter</kbd></code></pre>
+        Not skipping this step and choosing a mirror makes the following download
+        significantly faster:
+        <pre><code>pacstrap /mnt base</code></pre>
+        This downloads Arch Linux onto your disks.
+    <p>
+        Now you want to save the configuration of your mount points:
+        <pre><code>genfstab -U /mnt >> /mnt/etc/fstab</code></pre>
+    </p>
+
+    <p>
+        After this step, you have a working system:
+        <pre><code>arch-chroot /mnt</code></pre>
+        How exciting! If you want this system to be loaded at boot however, you
+        will need to install a
+        <a href="https://wiki.archlinux.org/index.php/Category:Boot_loaders">bootloader</a>.
+        GRUB is easy and supports nearly everything. Assuming you've installed Arch Linux
+        to <code>/dev/sda</code>, then you need only run:
+<pre><code>pacman -S grub
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+        These three commands install grub through the package manager and configure it
+        for your <code>/dev/sda</code> device.
+    </p>
+
+    <p>
+        Now is a good time to figure out your <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration">wireless</a> software, if you need that. Setting a locale
+        is also important, so running <pre><code>echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf</code></pre> is useful for English locales.
+    </p>
+
+    <p>
+        That's it! <code>reboot</code> and realize that cross-platform is a lie!
+        Go <a href="https://wiki.archlinux.org/index.php/Installation_guide">figure out</a>
+        what went wrong, unless you're one of the lucky few with
+        Linux-friendly hardware.
+    </p>
+
+    <p>
+        If you're stuck, there is really great copypasta at
+        <a href="lf.lc">lf.lc</a> for a key-by-key minimalist Arch installation
+        (using syslinux and minimal configurations).
+    </p>
+
+    <p>
+        Did I mention that the <a href="https://wiki.archlinux.org/index.php/Main_page">Arch Wiki</a> is excellent ?
+    </p>
+<hr>
+
     <h1 itemprop="headline">Go Learn a New Language</h1>
 
     <div class="date" itemprop="datePublished" content=""><!--TODO: rel time @ CST 12PM-->
-        18th Feburary 2017
+        18 February 2017
     </div>
     <!--
         Language is core to culture.
@@ -261,8 +429,8 @@
         "Islamic Terrorism" ever resound with the public? When Python
         programmers know the difference between built-in arrays and numpy
         arrays, when C++ programmers see lambda expressions for what they are,
-        when C programmers can envision use cases where Haskell would bring a
-        performance boost, then maybe we can make Stack Overflow great again.
+        when C programmers can see times when Haskell would be more appropriate,
+        then maybe we can make Stack Overflow great again.
     <!--wanted to write about rants/arguments-->
     </p>
 
